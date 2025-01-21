@@ -283,8 +283,8 @@ def main():
         "Transactions",
         "Stock Prices",
         "Fetch Real Time Price (Yahoo .JK)",
-        "Reports & Visualization",
-        "Advanced Analysis",
+        "Holdings Report",
+        "Performance Analysis",
     ]
     choice = st.sidebar.selectbox("Menu", menu)
 
@@ -743,7 +743,7 @@ def show_advanced_analysis():
     user = st.session_state["current_user"]
     user_data = st.session_state["user_data"][user]
 
-    st.title("Performance Report")
+    st.title("Performance Analysis")
     
     # Get initial cash balance
     initial_cash = st.number_input(
