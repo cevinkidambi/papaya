@@ -7,7 +7,7 @@ import yfinance as yf
 import io
 
 ###############################################################################
-# HELPER FUNCTIONS
+# HELPER 
 ###############################################################################
 
 def validate_transaction(transaction_type, lot, price, current_cash=None, total_value=None):
@@ -60,8 +60,8 @@ def get_price_on_date(stock, date_val, df_price):
 
 def build_monthly_statements(df_trans, df_price):
     """
-    Builds monthly statements showing stock values only, both aggregate and per-stock.
-    Returns two DataFrames: one for aggregate, one for per-stock breakdown.
+    Builds monthly statements showing stock values only, both aggregate and per stock.
+    Returns two DataFrames: one for aggregate, one for per stock breakdown.
     """
     if df_trans.empty or df_price.empty:
         return pd.DataFrame(), pd.DataFrame()
@@ -89,10 +89,10 @@ def build_monthly_statements(df_trans, df_price):
 
     # For aggregate values
     records_agg = []
-    # For per-stock breakdown
+    # For per stock breakdown
     records_detailed = []
     
-    # Get unique stock codes
+    # Get unique stock ticker
     unique_stocks = set(df_t["Stock"].unique())
     
     # For each EOM date
@@ -214,7 +214,7 @@ def calc_weighted_avg_and_rgain(df_trans, initial_cash=0):
 
         realized_gains.append(realized_gain)  # Append for EVERY transaction
 
-    df["Realized Gain"] = realized_gains  # Now lengths will match
+    df["Realized Gain"] = realized_gains  
     total_rgain = sum(realized_gains)
     return df, portfolio, total_rgain
 
@@ -250,8 +250,8 @@ def compute_performance_metrics(df_daily):
         annualized_return = 0
 
     # Sharpe Ratio
-    # risk_free ~ 0-5%, let's assume 3% / 365 daily
-    daily_rf = 0.03 / 365
+    # risk_free ~ 2-6%, let's assume 5% / 365 daily
+    daily_rf = 0.05 / 365
     df_daily["Excess Return"] = df_daily["Daily Return"] - daily_rf
     avg_excess = df_daily["Excess Return"].mean()
     std_excess = df_daily["Excess Return"].std()
@@ -267,7 +267,7 @@ def compute_performance_metrics(df_daily):
     }
 
 ###############################################################################
-# STREAMLIT APP
+# STREAMLIT 
 ###############################################################################
 
 def main():
@@ -420,7 +420,7 @@ def show_transactions():
     initial_cash = st.number_input(
         "Initial Cash Balance (Rp)", 
         min_value=0, 
-        value=100000000,  # 100M Rupiah default
+        value=100000000,  # Rp 100M  default
         step=1000000
     )
 
@@ -549,7 +549,7 @@ def show_fetch_jk():
     user = st.session_state["current_user"]
     user_data = st.session_state["user_data"][user]
     """
-    Demonstrate fetching Indonesian stock data from Yahoo Finance
+    Fetching Indonesian stock data from Yahoo Finance
     using the .JK suffix. E.g. BBCA.JK for Bank Central Asia.
     """
     st.title("Fetch Indonesian Stocks (.JK) from Yahoo Finance")
@@ -612,12 +612,12 @@ def show_reports_and_viz():
     user = st.session_state["current_user"]
     user_data = st.session_state["user_data"][user]
 
-    st.title("Reports & Visualization")
+    st.title("Holdings Report")
 
     # Get initial cash balance from user
     initial_cash = st.number_input("Initial Cash Balance (Rp)", 
                                  min_value=0, 
-                                 value=100000000,  # 100M Rupiah default
+                                 value=100000000,  # Rp 100M default
                                  step=1000000)
 
     df_trans = pd.DataFrame(st.session_state["user_data"][user]["transactions"])
@@ -686,7 +686,6 @@ def show_reports_and_viz():
         ).get_figure()
         st.pyplot(fig_pie)
 
-    # Rest of the code remains unchanged...
     # EOM-based monthly statements
     st.write("---")
     st.write("### Monthly EOM Portfolio Value")
@@ -744,13 +743,13 @@ def show_advanced_analysis():
     user = st.session_state["current_user"]
     user_data = st.session_state["user_data"][user]
 
-    st.title("Advanced Analysis")
+    st.title("Performance Report")
     
     # Get initial cash balance
     initial_cash = st.number_input(
         "Initial Cash Balance (Rp)", 
         min_value=0, 
-        value=100000000,  # 100M Rupiah default
+        value=100000000,  # Rp 100M default
         step=1000000
     )
 
