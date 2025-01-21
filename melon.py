@@ -296,9 +296,9 @@ def main():
         show_prices()
     elif choice == "Fetch Real Time Price (Yahoo .JK)":
         show_fetch_jk()
-    elif choice == "Reports & Visualization":
+    elif choice == "Holdings Report":
         show_reports_and_viz()
-    elif choice == "Advanced Analysis":
+    elif choice == "Performance Analysis":
         show_advanced_analysis()
 
 def show_auth_page():
