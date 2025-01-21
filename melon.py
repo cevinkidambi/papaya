@@ -394,7 +394,7 @@ def show_auth_page():
 
 
 def show_dashboard():
-    st.title("CuanPro Stock Portfolio Monitor,   Lite version")
+    st.title("CuanPorto Stock Portfolio Monitor,  Lite version")
     st.markdown("""
     **Features**:
     1. Weighted Average Cost & Realized Gains
